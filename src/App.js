@@ -12,7 +12,7 @@ const App = () => {
 	const [data, setData] = useState([{time: NaN, T: NaN, H: NaN, Tw: NaN}]);
 	const [status, setStatus] = useState("disconnected");
 
-	const onChange = (e) => {
+	const onCharacteristicChange = e => {
 		const { value } = e.target;
 		const message = new TextDecoder().decode(value).slice(0, -1);
 		const entries = message.split(" ").map(param => param.split("="));
@@ -47,15 +47,17 @@ const App = () => {
 	}
 
 	async function connectDeviceAndCacheCharacteristics() {
-		if (device.gatt.connected && characteristic) {
+		if (device.gatt.connected && characteristic !== "") {
 			return;
 		}
+
 		const server = await device.gatt.connect();
 		setStatus("connected");
+
 		const service = await server.getPrimaryService(serviceUUID);
 		characteristic = await service.getCharacteristic(characteristicUUID);
 
-		characteristic.addEventListener('characteristicvaluechanged', onChange);
+		characteristic.addEventListener('characteristicvaluechanged', onCharacteristicChange);
 		characteristic.startNotifications();
 	}
 
