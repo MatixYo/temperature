@@ -30,10 +30,10 @@ const App = () => {
 			if(!device) {
 				await requestDevice();
 			}
-			setStatus("connecting");
+			setStatus("connecting...");
 			await connectDeviceAndCacheCharacteristics();
-		} catch(er) {
-			console.log(er)
+		} catch(e) {
+			console.error(e)
 		}
 	}
 
