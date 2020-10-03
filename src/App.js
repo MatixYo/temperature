@@ -30,10 +30,10 @@ const App = () => {
 			if(!device) {
 				await requestDevice();
 			}
-			setStatus("connecting");
+			setStatus("connecting...");
 			await connectDeviceAndCacheCharacteristics();
-		} catch(er) {
-			console.log(er)
+		} catch(e) {
+			console.error(e)
 		}
 	}
 
@@ -73,7 +73,7 @@ const App = () => {
 		<div>
 			<div className="App">
 				<button onClick={onClick}>Scan</button>
-				{!isNaN(time) > 0 && <>
+				{!isNaN(time) && <>
 					<div style={{fontSize: 100, fontStyle: "light", fontFamily: "Segoe UI"}}>{T} C</div>
 					<div style={{fontSize: 100, fontStyle: "light", fontFamily: "Segoe UI"}}>{H}%</div>
 					<div style={{fontSize: 80, fontStyle: "light", fontFamily: "Segoe UI"}}>{Tw} C</div>
