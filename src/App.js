@@ -4,6 +4,7 @@ import './App.css'
 
 const serviceUUID = "226c0000-6476-4566-7562-66734470666d";
 const characteristicUUID = "226caa55-6476-4566-7562-66734470666d";
+const namePrefix = "MJ_HT_V1";
 
 const getTw = (T, H) => T * Math.atan(0.151977 * (H + 8.313659)**(1/2)) + Math.atan(T + H) - Math.atan(H - 1.676331) + 0.00391838 * H**(3/2) * Math.atan(0.023101 * H) - 4.686035;
 
@@ -39,7 +40,7 @@ const App = () => {
 
 	async function requestDevice() {
 		device = await navigator.bluetooth.requestDevice({
-			filters: [{ namePrefix: "MJ_HT_V1" }],
+			filters: [{ namePrefix }],
 			optionalServices: [serviceUUID]
 		});
 		device.addEventListener('gattserverdisconnected', onDisconnected);
@@ -72,7 +73,7 @@ const App = () => {
 	return (
 		<div>
 			<div className="App">
-				<button onClick={onClick}>Scan</button>
+				<button onClick={onClick}>Scan for {namePrefix}</button>
 				{!isNaN(time) && <>
 					<div style={{fontSize: 100, fontStyle: "light", fontFamily: "Segoe UI"}}>{T} C</div>
 					<div style={{fontSize: 100, fontStyle: "light", fontFamily: "Segoe UI"}}>{H}%</div>
@@ -81,7 +82,7 @@ const App = () => {
 				</>}
 				<p>{status}</p>
 				<LineChart width={600} height={300} data={data} style={{margin: "auto"}}>
-					<Line type="monotone" dataKey="T" stroke={"#8884d8"} />
+					<Line type="monotone" dataKey="T" stroke={"#4a3bf6"} />
 					<Line type="monotone" dataKey="H" stroke={"#2eaa5c"} />
 					<Line type="monotone" dataKey="Tw" stroke={"#c94040"} />
 					<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
